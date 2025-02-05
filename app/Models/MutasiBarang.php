@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class MutasiBarang extends Model
 {
@@ -20,7 +21,7 @@ class MutasiBarang extends Model
     ];
 
     // Relasi dengan model Barang
-    public function barang()
+    public function barang(): BelongsTo
     {
         return $this->belongsTo(Barang::class);
     }
@@ -28,39 +29,44 @@ class MutasiBarang extends Model
     // Event untuk update stok setelah penyimpanan mutasi barang
     protected static function booted()
     {
-        // Event saat data mutasi barang baru dibuat
+        static::creating(function ($mutasiBarang) {
+            $mutasiBarang->cekStokSebelumMutasi();
+        });
+
         static::created(function ($mutasiBarang) {
             $mutasiBarang->updateStokBarang();
         });
 
-        // Event saat data mutasi barang diupdate
         static::updated(function ($mutasiBarang) {
             $mutasiBarang->updateStokBarang();
         });
     }
 
+    // Cek stok sebelum mutasi untuk mencegah stok negatif
+    public function cekStokSebelumMutasi()
+    {
+        $barang = $this->barang;
+
+        // Jangan lempar exception, cukup return false
+        if ($this->jenis === 'output' && $this->jumlah > $barang->stok) {
+            return false;
+        }
+
+        return true;
+    }
+
+
+    // Update stok setelah mutasi
     public function updateStokBarang()
     {
         $barang = $this->barang;
 
-        // Jika jenis mutasi adalah input, tambahkan stok
-        if ($this->jenis == 'input') {
+        if ($this->jenis === 'input') {
             $barang->stok += $this->jumlah;
-        }
-        // Jika jenis mutasi adalah output
-        elseif ($this->jenis == 'output') {
-            // Cek apakah jumlah yang dimutasi lebih banyak dari stok
-            if ($this->jumlah > $barang->stok) {
-                // Jika jumlah mutasi lebih besar dari stok, batalkan mutasi dan beri error
-                throw new \Exception('Stok tidak cukup untuk mutasi output');
-            }
-
-            // Kurangi stok jika jumlahnya valid
+        } elseif ($this->jenis === 'output') {
             $barang->stok -= $this->jumlah;
         }
 
-        // Simpan perubahan stok
         $barang->save();
     }
-
 }
