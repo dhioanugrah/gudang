@@ -23,4 +23,16 @@ class Barang extends Model
         'satuan',
         'stok'
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Memastikan stok tidak negatif sebelum menyimpan
+        static::saving(function ($barang) {
+            if ($barang->stok < 0) {
+                $barang->stok = 0;
+            }
+        });
+    }
 }

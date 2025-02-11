@@ -16,4 +16,13 @@ class EditBarang extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        if ($data['stok'] < 0) {
+            $data['stok'] = 0;
+        }
+        return $data;
+    }
 }
+
