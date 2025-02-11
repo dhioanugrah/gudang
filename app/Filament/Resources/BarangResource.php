@@ -39,7 +39,9 @@ class BarangResource extends Resource
                     ->required(),
                 Forms\Components\TextInput::make('stok')
                     ->required()
-                    ->numeric(),
+                    ->numeric()
+                    ->minValue(0)
+                    ->default(0)
             ]);
     }
 
