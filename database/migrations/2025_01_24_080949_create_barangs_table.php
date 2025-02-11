@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('nama_barang');
             $table->string('merk');
             $table->string('ukuran');
+            $table->string('part_number');          
             $table->string('satuan');
             $table->integer('stok');
             $table->timestamps();

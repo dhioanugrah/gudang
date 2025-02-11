@@ -33,6 +33,8 @@ class BarangResource extends Resource
                     ->required(),
                 Forms\Components\TextInput::make('ukuran')
                     ->required(),
+                Forms\Components\TextInput::make('part_number')
+                    ->required(),
                 Forms\Components\TextInput::make('satuan')
                     ->required(),
                 Forms\Components\TextInput::make('stok')
@@ -49,6 +51,7 @@ class BarangResource extends Resource
                 Tables\Columns\TextColumn::make('nama_barang')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('merk')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('ukuran')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('part_number')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('satuan'),
                 Tables\Columns\TextColumn::make('stok')->sortable(),
             ])
