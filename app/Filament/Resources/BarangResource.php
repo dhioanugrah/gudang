@@ -26,7 +26,7 @@ class BarangResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('kode_barang')
                     ->required()
-                    ->unique(),
+                    ->unique(ignoreRecord: true),
                 Forms\Components\TextInput::make('nama_barang')
                     ->required(),
                 Forms\Components\TextInput::make('merk')
