@@ -1,5 +1,9 @@
 <?php
-// Migration untuk mutasi_barangs
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
 class CreateMutasiBarangTable extends Migration
 {
     /**
@@ -10,7 +14,7 @@ class CreateMutasiBarangTable extends Migration
         Schema::create('mutasi_barang', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('barang_id');
-            $table->foreign('barang_id')->references('id')->on('barangs')->onDelete('cascade'); // Foreign key dengan cascade
+            $table->foreign('barang_id')->references('id')->on('barangs')->onDelete('cascade');
             $table->date('tanggal');
             $table->enum('jenis', ['input', 'output']);
             $table->integer('jumlah');

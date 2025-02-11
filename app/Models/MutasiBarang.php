@@ -17,8 +17,10 @@ class MutasiBarang extends Model
         'tanggal',
         'jenis',
         'jumlah',
+        'vendor', // Tambahkan vendor
         'keterangan'
     ];
+
 
     // Relasi dengan model Barang
     public function barang(): BelongsTo
