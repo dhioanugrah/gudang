@@ -9,6 +9,6 @@ class Barang extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['kode_barang', 'nama_barang', 'satuan', 'stok'];
+    protected $fillable = ['kode_barang', 'nama_barang', 'merk', 'ukuran', 'satuan', 'stok'];
 }
 

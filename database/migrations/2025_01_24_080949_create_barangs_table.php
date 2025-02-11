@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('kode_barang')->unique();
             $table->string('nama_barang');
+            $table->string('merk');
+            $table->string('ukuran');
             $table->string('satuan');
             $table->integer('stok');
             $table->timestamps();
