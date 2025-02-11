@@ -5,10 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 class CreateMutasiBarangTable extends Migration
-{
-    /**
-     * Run the migrations.
-     */
+{   
     public function up(): void
     {
         Schema::create('mutasi_barang', function (Blueprint $table) {

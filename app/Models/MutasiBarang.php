@@ -17,15 +17,16 @@ class MutasiBarang extends Model
         'tanggal',
         'jenis',
         'jumlah',
-        'vendor', // Tambahkan vendor
-        'keterangan'
+        'keterangan',
+        'pengguna', // Tambahkan pengguna
     ];
 
 
+
     // Relasi dengan model Barang
-    public function barang(): BelongsTo
+    public function barangs(): BelongsTo
     {
-        return $this->belongsTo(Barang::class);
+        return $this->belongsTo(barangs::class);
     }
 
     // Event untuk update stok setelah penyimpanan mutasi barang

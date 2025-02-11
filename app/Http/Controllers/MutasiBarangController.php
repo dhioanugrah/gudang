@@ -16,7 +16,7 @@ class MutasiBarangKeluarController extends Controller
                 'barang_id' => 'required|exists:barangs,id',
                 'tanggal' => 'required|date',
                 'jumlah' => 'required|integer|min:1',
-                'vendor' => 'required|string|max:255', // Validasi vendor
+                'pengguna' => 'required|string|max:255', // Validasi pengguna wajib diisi
                 'keterangan' => 'nullable|string',
             ]);
 
@@ -34,7 +34,7 @@ class MutasiBarangKeluarController extends Controller
                 'tanggal' => $request->tanggal,
                 'jenis' => 'output', // Hanya barang keluar
                 'jumlah' => $request->jumlah,
-                'vendor' => $request->vendor, // Tambahkan vendor
+                'pengguna' => $request->pengguna, // Simpan pengguna
                 'keterangan' => $request->keterangan,
             ]);
 

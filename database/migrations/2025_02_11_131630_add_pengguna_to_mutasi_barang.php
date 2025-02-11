@@ -4,18 +4,20 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     public function up(): void
     {
         Schema::table('mutasi_barang', function (Blueprint $table) {
-            $table->string('pengguna')->nullable()->after('jumlah'); // Menambahkan kolom vendor
+            $table->string('pengguna')->after('keterangan'); // Tambah kolom pengguna
         });
     }
 
     public function down(): void
     {
         Schema::table('mutasi_barang', function (Blueprint $table) {
-            $table->dropColumn('vendor');
+            $table->dropColumn('pengguna');
         });
     }
+
 };
