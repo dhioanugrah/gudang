@@ -20,28 +20,45 @@ class BarangResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-s-archive-box';
 
 
-    public static function form(Forms\Form $form): Forms\Form
+    public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('kode_barang')
-                    ->required()
-                    ->unique(ignoreRecord: true),
-                Forms\Components\TextInput::make('nama_barang')
-                    ->required(),
-                Forms\Components\TextInput::make('merk')
-                    ->required(),
-                Forms\Components\TextInput::make('ukuran')
-                    ->required(),
-                Forms\Components\TextInput::make('part_number')
-                    ->required(),
-                Forms\Components\TextInput::make('satuan')
-                    ->required(),
-                Forms\Components\TextInput::make('stok')
-                    ->required()
-                    ->numeric(),
-            ]);
+        return $form->schema([
+            Forms\Components\TextInput::make('kode_barang')
+                ->label('Kode Barang')
+                ->required()
+                ->unique()
+                ->maxLength(50),
+
+            Forms\Components\TextInput::make('nama_barang')
+                ->label('Nama Barang')
+                ->required()
+                ->maxLength(255),
+
+            Forms\Components\TextInput::make('merk')
+                ->label('Merk')
+                ->maxLength(100),
+
+            Forms\Components\TextInput::make('ukuran')
+                ->label('Ukuran')
+                ->maxLength(50),
+
+            Forms\Components\TextInput::make('part_number')
+                ->label('Part Number')
+                ->maxLength(50),
+
+            Forms\Components\TextInput::make('satuan')
+                ->label('Satuan')
+                ->required()
+                ->maxLength(20),
+
+            Forms\Components\TextInput::make('stok')
+                ->label('Stok')
+                ->numeric()
+                ->required()
+                ->default(0),
+        ]);
     }
+
 
     public static function table(Tables\Table $table): Tables\Table
     {

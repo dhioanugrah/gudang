@@ -15,12 +15,17 @@ class Barang extends Model
     protected $keyType = 'string'; // Primary key berupa string
 
     protected $fillable = [
-        'kode_barang', 
-        'nama_barang', 
-        'merk', 
-        'ukuran', 
-        'part_number', 
-        'satuan', 
+        'kode_barang',
+        'nama_barang',
+        'merk',
+        'ukuran',
+        'part_number',
+        'satuan',
         'stok'
     ];
+
+    public function prDetails()
+    {
+        return $this->hasMany(PrDetail::class, 'kode_barang', 'kode_barang');
+    }
 }
