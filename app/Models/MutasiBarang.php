@@ -13,19 +13,21 @@ class MutasiBarang extends Model
     protected $table = 'mutasi_barang'; // Sesuaikan dengan nama tabel
 
     protected $fillable = [
-        'barang_id',
+        'kode_barang',
         'tanggal',
         'jenis',
         'jumlah',
-        'vendor', // Tambahkan vendor
-        'keterangan'
+        'keterangan',
+        'pengguna', // Tambahkan pengguna
     ];
+
 
 
     // Relasi dengan model Barang
     public function barang(): BelongsTo
     {
-        return $this->belongsTo(Barang::class);
+        return $this->belongsTo(Barang::class, 'kode_barang', 'kode_barang');
+
     }
 
     // Event untuk update stok setelah penyimpanan mutasi barang
@@ -44,31 +46,38 @@ class MutasiBarang extends Model
         });
     }
 
-    // Cek stok sebelum mutasi untuk mencegah stok negatif
     public function cekStokSebelumMutasi()
     {
-        $barang = $this->barang;
-
-        // Jangan lempar exception, cukup return false
-        if ($this->jenis === 'output' && $this->jumlah > $barang->stok) {
-            return false;
+        $barang = Barang::where('kode_barang', $this->kode_barang)->first();
+    
+        if (!$barang) {
+            throw new \Exception("Barang dengan kode {$this->kode_barang} tidak ditemukan.");
         }
-
+    
+        if ($this->jenis === 'output' && $this->jumlah > $barang->stok) {
+            throw new \Exception("Stok barang tidak mencukupi.");
+        }
+    
         return true;
     }
+    
 
 
-    // Update stok setelah mutasi
     public function updateStokBarang()
     {
-        $barang = $this->barang;
-
+        $barang = Barang::where('kode_barang', $this->kode_barang)->first();
+    
+        if (!$barang) {
+            throw new \Exception("Barang dengan kode {$this->kode_barang} tidak ditemukan.");
+        }
+    
         if ($this->jenis === 'input') {
             $barang->stok += $this->jumlah;
         } elseif ($this->jenis === 'output') {
             $barang->stok -= $this->jumlah;
         }
-
+    
         $barang->save();
     }
+    
 }
